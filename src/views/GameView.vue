@@ -69,7 +69,7 @@ function resetCurrGuess(): void {
   currGuessRef.value.year = null!;
 }
 
-const isGuessValid = reactive(() => {
+const isGuessValid = computed(() => {
   const make = (currGuessRef.value.make ?? '').trim();
   const model = (currGuessRef.value.model ?? '').trim();
   const year = currGuessRef.value.year ?? 0;
@@ -121,7 +121,7 @@ function copyResults(): void {
   <div class="d-flex w-100 justify-content-center">
     <div class="col-12 col-md-10 col-xl-8">
       <div class="d-flex flex-column align-items-center py-2 gap-2">
-        <img src="../assets/temp/2011-harley-davidson-road-king-bring-a-trailer.avif" />
+        <img src="@/assets/2026-07-09/2011-harley-davidson-road-king-bring-a-trailer.avif" />
 
         <div class="guess-grid">
           <b>Make:</b>
@@ -147,7 +147,7 @@ function copyResults(): void {
           </template>
         </div>
 
-        <button type="button" :disabled="!isGuessValid()" @click="submitGuess">Guess</button>
+        <button type="button" :disabled="!isGuessValid" @click="submitGuess">Guess</button>
 
         <div class="text-center d-flex flex-column align-items-center" v-if="isGameOver">
           <h2 v-if="guessedCorrectly">A winner is you!</h2>

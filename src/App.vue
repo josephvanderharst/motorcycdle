@@ -23,7 +23,7 @@ header {
 }
 
 .header-block {
-  width: 100vw;
+  width: 100%;
   display: block;
 }
 
