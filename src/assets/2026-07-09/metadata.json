@@ -1,0 +1,40 @@
+{
+  "filename": "2011-harley-davidson-road-king-bring-a-trailer.avif",
+  "answer": {
+    "make": "Harley Davidson",
+    "model": "Road King",
+    "year": 2011
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 40,
+      "x_end_percent": 60,
+      "y_start_percent": 40,
+      "y_end_percent": 60
+    },
+    {
+      "x_start_percent": 35,
+      "x_end_percent": 65,
+      "y_start_percent": 35,
+      "y_end_percent": 65
+    },
+    {
+      "x_start_percent": 20,
+      "x_end_percent": 80,
+      "y_start_percent": 20,
+      "y_end_percent": 80
+    },
+    {
+      "x_start_percent": 10,
+      "x_end_percent": 90,
+      "y_start_percent": 10,
+      "y_end_percent": 90
+    },
+    {
+      "x_start_percent": 0,
+      "x_end_percent": 100,
+      "y_start_percent": 0,
+      "y_end_percent": 100
+    }
+  ]
+}

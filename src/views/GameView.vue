@@ -1,17 +1,51 @@
 <script setup lang="ts">
+import type { GameMetadata } from '@/types/game-metadata.type';
 import type { Guess } from '@/types/guess.type';
-import { computed, reactive, type Reactive } from 'vue';
+import { computed, onMounted, reactive, ref, type Reactive, type Ref } from 'vue';
 
 const minYear = 1900;
 const maxYear = new Date().getFullYear();
 
-const numGuesses = 5;
+const whichDayToPlay = '2026-07-09';
 
-const answer: Guess = { make: 'Harley Davidson', model: 'Road King', year: 2011 };
+async function getJson<T>(url: string | URL): Promise<T> {
+  return new Promise(async (resolve, reject) => {
+    const resp = await fetch(url);
+
+    if (!resp.ok) {
+      reject(`Error fetching '${url}': ${resp.status} ${resp.statusText}`);
+    }
+    else {
+      const json = await resp.json();
+      resolve(json as T);
+    }
+  });
+};
+
+const metadata: Ref<GameMetadata> = ref({} as GameMetadata);
+
+const numGuesses = computed(() => metadata.value?.guess_boundaries?.length ?? 0);
+
+const answer = computed(() => metadata.value?.answer);
 
 const currGuess: Reactive<Guess> = reactive({ make: null!, model: null!, year: null! });
 
 const guesses: Reactive<Guess[]> = reactive([]);
+
+// const guesses: Reactive<Guess[]> = reactive([
+//   { make: 'Hayley Darwin', model: 'Da Hawg', year: 1945 },
+//   { make: 'Hayday Dayvid', model: 'Payday', year: 2001 },
+//   { make: 'Harley Davidson', model: 'Road King', year: 2010 },
+//   { make: 'Harley Davidson', model: 'Road King', year: 2011 },
+// ]);
+
+// const guesses: Reactive<Guess[]> = reactive([
+//   { make: 'Hayley Darwin', model: 'Da Hawg', year: 1945 },
+//   { make: 'Hayday Dayvid', model: 'Payday', year: 2001 },
+//   { make: 'Hurley Duelly', model: 'Road Queen', year: 2019 },
+//   { make: 'Horribly Derpy', model: 'Hamster Huey', year: 2013 },
+//   { make: 'Harley Davidson', model: 'Road King', year: 2011 },
+// ]);
 
 const guessedCorrectly = computed(() => {
   const theGuesses = guesses;
@@ -19,15 +53,15 @@ const guessedCorrectly = computed(() => {
 
   if (finalGuess == null) return false;
 
-  return makeOrModelCorrect(finalGuess.make, answer.make)
-    && makeOrModelCorrect(finalGuess.model, answer.model)
-    && yearDist(finalGuess.year, answer.year) <= 5;
+  return makeOrModelCorrect(finalGuess.make, answer.value.make)
+    && makeOrModelCorrect(finalGuess.model, answer.value.model)
+    && yearDist(finalGuess.year, answer.value.year) <= 5;
 });
 
 const currGuessIndex = computed(() => guesses.length);
 
 const guessesAfterCurrent = computed(() => {
-  const numRemaining = numGuesses - guesses.length;
+  const numRemaining = numGuesses.value - guesses.length;
   const remainingAfterCurrent = numRemaining - (guessedCorrectly.value ? 0 : 1);
 
   if (remainingAfterCurrent > 0) return new Array(remainingAfterCurrent);
@@ -35,7 +69,7 @@ const guessesAfterCurrent = computed(() => {
 });
 
 const isGameOver = computed(() => {
-  return guessedCorrectly.value || currGuessIndex.value === numGuesses;
+  return guessedCorrectly.value || currGuessIndex.value === numGuesses.value;
 });
 
 function makeOrModelCorrect(value: string, answer: string): boolean {
@@ -89,13 +123,13 @@ function copyResults(): void {
   const results = guesses.map(guess => {
     const squares = ['🟥','🟥','🟥'];
 
-    if (makeOrModelCorrect(guess.make, answer.make)) squares[0] = '🟩';
+    if (makeOrModelCorrect(guess.make, answer.value.make)) squares[0] = '🟩';
 
-    if (makeOrModelCorrect(guess.model, answer.model)) squares[1] = '🟩';
+    if (makeOrModelCorrect(guess.model, answer.value.model)) squares[1] = '🟩';
 
-    if (yearDist(guess.year, answer.year) === 0) squares[2] = '✅';
-    else if (yearDist(guess.year, answer.year) <= 5) squares[2] = '❎';
-    else if (yearDist(guess.year, answer.year) <= 10) squares[2] = '🟨';
+    if (yearDist(guess.year, answer.value.year) === 0) squares[2] = '✅';
+    else if (yearDist(guess.year, answer.value.year) <= 5) squares[2] = '❎';
+    else if (yearDist(guess.year, answer.value.year) <= 10) squares[2] = '🟨';
 
     return squares;
   });
@@ -107,6 +141,15 @@ function copyResults(): void {
   navigator.clipboard.writeText(formatted);
   alert(`Copied results to clipboard!\n\n${formatted}`);
 }
+
+async function initGame() {
+  const metadataUrl = `src/assets/${whichDayToPlay}/metadata.json`;
+  metadata.value = await getJson<GameMetadata>(metadataUrl);
+}
+
+onMounted(() => {
+  initGame();
+})
 </script>
 
 <template>
@@ -117,11 +160,12 @@ function copyResults(): void {
     <span><b>Num guesses after current:</b> {{ guessesAfterCurrent.length }}</span>
     <span><b>Did player win:</b> {{ guessedCorrectly }}</span>
     <span><b>Is game over:</b> {{ isGameOver }}</span>
+    <span><b>Metadata:</b> {{ metadata }}</span>
   </div>
-  <div class="d-flex w-100 justify-content-center">
+  <div class="d-flex w-100 justify-content-center" v-if="metadata && answer">
     <div class="col-12 col-md-10 col-xl-8">
       <div class="d-flex flex-column align-items-center py-2 gap-2">
-        <img src="@/assets/2026-07-09/2011-harley-davidson-road-king-bring-a-trailer.avif" />
+        <img v-if="metadata" :src="`/src/assets/${whichDayToPlay}/${metadata.filename}`" />
 
         <div class="guess-grid">
           <b>Make:</b>
