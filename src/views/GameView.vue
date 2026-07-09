@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Guess } from '@/types/guess.type';
-import { computed, reactive, ref, type Ref } from 'vue';
+import { computed, reactive, type Reactive } from 'vue';
 
 const minYear = 1900;
 const maxYear = new Date().getFullYear();
@@ -9,12 +9,12 @@ const numGuesses = 5;
 
 const answer: Guess = { make: 'Harley Davidson', model: 'Road King', year: 2011 };
 
-const currGuessRef: Ref<Guess> = ref({ make: null!, model: null!, year: null! });
+const currGuess: Reactive<Guess> = reactive({ make: null!, model: null!, year: null! });
 
-const guessesRef: Ref<Guess[]> = ref([]);
+const guesses: Reactive<Guess[]> = reactive([]);
 
 const guessedCorrectly = computed(() => {
-  const theGuesses = guessesRef.value;
+  const theGuesses = guesses;
   const finalGuess = theGuesses[theGuesses.length - 1];
 
   if (finalGuess == null) return false;
@@ -24,10 +24,10 @@ const guessedCorrectly = computed(() => {
     && yearDist(finalGuess.year, answer.year) <= 5;
 });
 
-const currGuessIndex = computed(() => guessesRef.value.length);
+const currGuessIndex = computed(() => guesses.length);
 
 const guessesAfterCurrent = computed(() => {
-  const numRemaining = numGuesses - guessesRef.value.length;
+  const numRemaining = numGuesses - guesses.length;
   const remainingAfterCurrent = numRemaining - (guessedCorrectly.value ? 0 : 1);
 
   if (remainingAfterCurrent > 0) return new Array(remainingAfterCurrent);
@@ -64,15 +64,15 @@ function yearClass(value: number, answer: number): string {
 }
 
 function resetCurrGuess(): void {
-  currGuessRef.value.make = null!;
-  currGuessRef.value.model = null!;
-  currGuessRef.value.year = null!;
+  currGuess.make = null!;
+  currGuess.model = null!;
+  currGuess.year = null!;
 }
 
 const isGuessValid = computed(() => {
-  const make = (currGuessRef.value.make ?? '').trim();
-  const model = (currGuessRef.value.model ?? '').trim();
-  const year = currGuessRef.value.year ?? 0;
+  const make = (currGuess.make ?? '').trim();
+  const model = (currGuess.model ?? '').trim();
+  const year = currGuess.year ?? 0;
 
   return make !== ''
     && model !== ''
@@ -81,12 +81,12 @@ const isGuessValid = computed(() => {
 });
 
 function submitGuess(): void {
-  guessesRef.value.push({...currGuessRef.value});
+  guesses.push({...currGuess});
   resetCurrGuess();
 }
 
 function copyResults(): void {
-  const results = guessesRef.value.map(guess => {
+  const results = guesses.map(guess => {
     const squares = ['🟥','🟥','🟥'];
 
     if (makeOrModelCorrect(guess.make, answer.make)) squares[0] = '🟩';
@@ -111,7 +111,7 @@ function copyResults(): void {
 
 <template>
   <div class="d-flex flex-column d-none">
-    <span><b>Current guess:</b> {{ currGuessRef }}</span>
+    <span><b>Current guess:</b> {{ currGuess }}</span>
     <span><b>Num guesses allowed:</b> {{ numGuesses }}</span>
     <span><b>Guess index:</b> {{ currGuessIndex }}</span>
     <span><b>Num guesses after current:</b> {{ guessesAfterCurrent.length }}</span>
@@ -128,16 +128,16 @@ function copyResults(): void {
           <b>Model:</b>
           <b>Year:</b>
 
-          <template v-for="guess of guessesRef">
+          <template v-for="guess of guesses">
             <input type="text" readonly :value="guess.make" :class="makeOrModelClass(guess.make, answer.make)" />
             <input type="text" readonly :value="guess.model" :class="makeOrModelClass(guess.model, answer.model)" />
             <input type="number" readonly :value="guess.year" :class="yearClass(guess.year, answer.year)" />
           </template>
 
           <template v-if="currGuessIndex < numGuesses && !guessedCorrectly">
-            <input type="text" v-model="currGuessRef.make" />
-            <input type="text" v-model="currGuessRef.model" />
-            <input type="number" v-model="currGuessRef.year" min="1900" :max="maxYear" />
+            <input type="text" v-model="currGuess.make" />
+            <input type="text" v-model="currGuess.model" />
+            <input type="number" v-model="currGuess.year" min="1900" :max="maxYear" />
           </template>
 
           <template v-for="_ of guessesAfterCurrent">
@@ -161,7 +161,7 @@ function copyResults(): void {
             <b>Year:</b>
             <br/>
 
-            <template v-for="guess of guessesRef">
+            <template v-for="guess of guesses">
               <span v-if="makeOrModelCorrect(guess.make, answer.make)">🟩</span>
               <span v-else>🟥</span>
 
