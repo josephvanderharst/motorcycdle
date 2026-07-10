@@ -127,9 +127,10 @@ function copyResults(): void {
 
     if (makeOrModelCorrect(guess.model, answer.value.model)) squares[1] = '🟩';
 
-    if (yearDist(guess.year, answer.value.year) === 0) squares[2] = '✅';
-    else if (yearDist(guess.year, answer.value.year) <= 5) squares[2] = '❎';
-    else if (yearDist(guess.year, answer.value.year) <= 10) squares[2] = '🟨';
+    const dist = yearDist(guess.year, answer.value.year);
+    if (dist === 0) squares[2] = '✅';
+    else if (dist <= 5) squares[2] = '❎';
+    else if (dist <= 10) squares[2] = '🟨';
 
     return squares;
   });
@@ -153,7 +154,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="d-flex flex-column d-none">
+  <div class="d-flex flex-column d-none" v-if="metadata && answer">
     <span><b>Current guess:</b> {{ currGuess }}</span>
     <span><b>Num guesses allowed:</b> {{ numGuesses }}</span>
     <span><b>Guess index:</b> {{ currGuessIndex }}</span>
