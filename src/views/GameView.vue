@@ -22,6 +22,9 @@ async function getJson<T>(url: string | URL): Promise<T> {
   });
 };
 
+const isGameLoading: Ref<boolean> = ref(false);
+const isGameReady: Ref<boolean> = ref(false);
+
 const metadata: Ref<GameMetadata> = ref({} as GameMetadata);
 
 const numGuesses = computed(() => metadata.value?.guess_boundaries?.length ?? 0);
@@ -119,9 +122,9 @@ function submitGuess(): void {
   resetCurrGuess();
 }
 
-function copyResults(): void {
-  const results = guesses.map(guess => {
-    const squares = ['🟥','🟥','🟥'];
+const resultsAsEmojiArrays = computed<[string,string,string][]>(() => {
+  return guesses.map(guess => {
+    const squares: [string,string,string] = ['🟥','🟥','🟥'];
 
     if (makeOrModelCorrect(guess.make, answer.value.make)) squares[0] = '🟩';
 
@@ -134,18 +137,30 @@ function copyResults(): void {
 
     return squares;
   });
+});
+
+function copyResults(): void {
+  const results = resultsAsEmojiArrays.value;
 
   const formatted = results
-    .map(r => `${r[0]} ${r[1]} ${r[2]}`)
-    .join('\n');
+    .map(([make,model,year]) => `${make} ${model} ${year}\n`)
+    .join('');
 
-  navigator.clipboard.writeText(formatted);
-  alert(`Copied results to clipboard!\n\n${formatted}`);
+  navigator.clipboard.writeText(formatted)
+    .then(() => alert(`Copied results to clipboard!\n\n${formatted}`))
+    .catch(() => alert(`Failed to copy results to clipboard.`));
 }
 
 async function initGame() {
+  isGameLoading.value = true;
+
   const metadataUrl = `src/assets/${whichDayToPlay}/metadata.json`;
   metadata.value = await getJson<GameMetadata>(metadataUrl);
+
+  if (metadata.value) {
+    isGameReady.value = true;
+  }
+  isGameLoading.value = false;
 }
 
 onMounted(() => {
@@ -154,7 +169,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="d-flex flex-column d-none" v-if="metadata && answer">
+  <div class="d-flex flex-column d-none" v-if="isGameReady">
     <span><b>Current guess:</b> {{ currGuess }}</span>
     <span><b>Num guesses allowed:</b> {{ numGuesses }}</span>
     <span><b>Guess index:</b> {{ currGuessIndex }}</span>
@@ -163,7 +178,7 @@ onMounted(() => {
     <span><b>Is game over:</b> {{ isGameOver }}</span>
     <span><b>Metadata:</b> {{ metadata }}</span>
   </div>
-  <div class="d-flex w-100 justify-content-center" v-if="metadata && answer">
+  <div class="d-flex w-100 justify-content-center" v-if="isGameReady">
     <div class="col-12 col-md-10 col-xl-8">
       <div class="d-flex flex-column align-items-center py-2 gap-2">
         <img v-if="metadata" :src="`/src/assets/${whichDayToPlay}/${metadata.filename}`" />
@@ -199,24 +214,16 @@ onMounted(() => {
           <h2 v-else>A winnern&apos;t is you!</h2>
           <h3>{{ answer.make }}&nbsp;{{ answer.model }}&nbsp;{{ answer.year }}</h3>
 
-          <!-- 🟥🟨🔴🟡🟢🟫🟪🟦⏹️⏹🟥🟧🟧🟩✅❎❎<br/> -->
           <div class="results-grid">
             <b>Make:</b>
             <b>Model:</b>
             <b>Year:</b>
             <br/>
 
-            <template v-for="guess of guesses" :key="guess">
-              <span v-if="makeOrModelCorrect(guess.make, answer.make)">🟩</span>
-              <span v-else>🟥</span>
-
-              <span v-if="makeOrModelCorrect(guess.model, answer.model)">🟩</span>
-              <span v-else>🟥</span>
-
-              <span v-if="yearDist(guess.year, answer.year) === 0">✅</span>
-              <span v-else-if="yearDist(guess.year, answer.year) <= 5">❎</span>
-              <span v-else-if="yearDist(guess.year, answer.year) <= 10">🟨</span>
-              <span v-else>🟥</span>
+            <template v-for="([make,model,year], index) of resultsAsEmojiArrays" :key="index">
+              <span>{{ make }}</span>
+              <span>{{ model }}</span>
+              <span>{{ year }}</span>
 
               <br/>
             </template>
