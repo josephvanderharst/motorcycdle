@@ -173,7 +173,7 @@ onMounted(() => {
           <b>Model:</b>
           <b>Year:</b>
 
-          <template v-for="guess of guesses">
+          <template v-for="(guess, index) of guesses" :key="index">
             <input type="text" readonly :value="guess.make" :class="makeOrModelClass(guess.make, answer.make)" />
             <input type="text" readonly :value="guess.model" :class="makeOrModelClass(guess.model, answer.model)" />
             <input type="number" readonly :value="guess.year" :class="yearClass(guess.year, answer.year)" />
@@ -185,7 +185,7 @@ onMounted(() => {
             <input type="number" v-model="currGuess.year" min="1900" :max="maxYear" />
           </template>
 
-          <template v-for="_ of guessesAfterCurrent">
+          <template v-for="(_, index) of guessesAfterCurrent" :key="index + currGuessIndex">
             <input type="text" readonly class="gray" />
             <input type="text" readonly class="gray" />
             <input type="number" readonly class="gray" />
@@ -206,7 +206,7 @@ onMounted(() => {
             <b>Year:</b>
             <br/>
 
-            <template v-for="guess of guesses">
+            <template v-for="guess of guesses" :key="guess">
               <span v-if="makeOrModelCorrect(guess.make, answer.make)">🟩</span>
               <span v-else>🟥</span>
 
