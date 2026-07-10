@@ -9,26 +9,26 @@
     {
       "x_start_percent": 40,
       "x_end_percent": 60,
-      "y_start_percent": 40,
-      "y_end_percent": 60
+      "y_start_percent": 78,
+      "y_end_percent": 98
     },
     {
       "x_start_percent": 35,
-      "x_end_percent": 65,
-      "y_start_percent": 35,
-      "y_end_percent": 65
+      "x_end_percent": 59,
+      "y_start_percent": 75,
+      "y_end_percent": 99
     },
     {
-      "x_start_percent": 20,
-      "x_end_percent": 80,
-      "y_start_percent": 20,
-      "y_end_percent": 80
+      "x_start_percent": 30,
+      "x_end_percent": 58,
+      "y_start_percent": 70,
+      "y_end_percent": 98
     },
     {
-      "x_start_percent": 10,
-      "x_end_percent": 90,
-      "y_start_percent": 10,
-      "y_end_percent": 90
+      "x_start_percent": 19,
+      "x_end_percent": 57,
+      "y_start_percent": 60,
+      "y_end_percent": 97
     },
     {
       "x_start_percent": 0,
