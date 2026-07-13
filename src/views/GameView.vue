@@ -1,50 +1,14 @@
 <script setup lang="ts">
+import { getJson } from '@/shared/fetch-json';
 import { useGamestate } from '@/shared/gamestate';
+import { initGuesses } from '@/shared/init-guesses';
 import { useSubimageMaker } from '@/shared/subimage-maker';
 import type { GameMetadata } from '@/types/game-metadata.type';
-import type { Guess } from '@/types/guess.type';
 import { onMounted, ref, type Ref } from 'vue';
 
 const devMode = ref(false);
 
-const initGuesses: Guess[] = [];
-
-// const initGuesses: Guess[] = [
-//   { make: 'Hayley Darwin', model: 'Da Hawg', year: 1945 },
-//   { make: 'Hayday Dayvid', model: 'Payday', year: 2001 },
-//   { make: 'Harley Davidson', model: 'Road Kingn\'t', year: 2010 },
-// ];
-
-// const initGuesses: Guess[] = [
-//   { make: 'Hayley Darwin', model: 'Da Hawg', year: 1945 },
-//   { make: 'Hayday Dayvid', model: 'Payday', year: 2001 },
-//   { make: 'Harley Davidson', model: 'Road King', year: 2010 },
-//   { make: 'Harley Davidson', model: 'Road King', year: 2011 },
-// ];
-
-// const initGuesses: Guess[] = [
-//   { make: 'Hayley Darwin', model: 'Da Hawg', year: 1945 },
-//   { make: 'Hayday Dayvid', model: 'Payday', year: 2001 },
-//   { make: 'Hurley Duelly', model: 'Road Queen', year: 2019 },
-//   { make: 'Horribly Derpy', model: 'Hamster Huey', year: 2013 },
-//   { make: 'Harley Davidson', model: 'Road King', year: 2011 },
-// ];
-
 const whichDayToPlay = '2026-07-09';
-
-async function getJson<T>(url: string | URL): Promise<T> {
-  return new Promise(async (resolve, reject) => {
-    const resp = await fetch(url);
-
-    if (!resp.ok) {
-      reject(`Error fetching '${url}': ${resp.status} ${resp.statusText}`);
-    }
-    else {
-      const json = await resp.json();
-      resolve(json as T);
-    }
-  });
-};
 
 const isGameLoading: Ref<boolean> = ref(false);
 const isGameReady: Ref<boolean> = ref(false);
@@ -69,6 +33,8 @@ const {
   ...gamestate
 } = useGamestate(initGuesses);
 
+const { mainImageUrl, subImageUrl, subImageBounds, ...subimageMaker } = useSubimageMaker();
+
 function makeOrModelClass(value: string, answer: string): string { 
   return makeOrModelCorrect(value, answer) ? 'green' : 'red';
 }
@@ -87,7 +53,7 @@ function submitGuess(): void {
   subimageMaker.makeSubimage(gamestate.currGuessBoundary.value);
 }
 
-function copyResults(): void {
+function copyResultsToClipboard(): void {
   const results = resultsAsEmojiArrays.value;
 
   const formatted = results
@@ -98,8 +64,6 @@ function copyResults(): void {
     .then(() => alert(`Copied results to clipboard!\n\n${formatted}`))
     .catch(() => alert(`Failed to copy results to clipboard.`));
 }
-
-const { mainImageUrl, subImageUrl, subImageBounds, ...subimageMaker } = useSubimageMaker();
 
 async function initGame() {
   isGameLoading.value = true;
@@ -206,7 +170,7 @@ onMounted(() => {
             </template>
           </div>
 
-          <button type="button" @click="copyResults">Copy</button>
+          <button type="button" @click="copyResultsToClipboard">Copy</button>
         </div>
       </div>
     </div>
