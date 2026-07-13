@@ -300,7 +300,8 @@ onMounted(() => {
             }"></div>
           </div>
         </details>
-        <img :src="subImageUrl" />
+        <img v-if="!isGameOver" :src="subImageUrl" />
+        <img v-else :src="mainImageUrl" />
 
         <div class="guess-grid">
           <b>Make:</b>
