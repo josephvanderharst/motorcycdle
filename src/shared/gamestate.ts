@@ -27,7 +27,10 @@ export function useGamestate(initGuesses: Guess[] = []) {
 
   const currGuessIndex = computed(() => guesses.length);
 
-  const currGuessBoundary = computed<Boundary>(() => metadata.value.guess_boundaries[currGuessIndex.value]!);
+  const currGuessBoundary = computed<Boundary>(() =>
+    metadata.value.guess_boundaries[currGuessIndex.value]
+    ?? { x_start_percent: 0, x_end_percent: 100, y_start_percent: 0, y_end_percent: 100, }
+  );
 
   const isGameOver = computed(() => {
     return guessedCorrectly.value || currGuessIndex.value === numGuesses.value;
