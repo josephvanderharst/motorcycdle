@@ -1,16 +1,8 @@
 <script setup lang="ts">
+import { useSubimageMaker } from '@/shared/subimage-maker';
 import type { GameMetadata } from '@/types/game-metadata.type';
 import type { Guess } from '@/types/guess.type';
 import { computed, onMounted, reactive, ref, type Reactive, type Ref } from 'vue';
-
-type SubimageBounds = {
-  left: number;
-  right: number;
-  top: number;
-  bottom: number;
-  width?: number;
-  height?: number;
-};
 
 const devMode = ref(false);
 
@@ -131,7 +123,9 @@ const isGuessValid = computed(() => {
 function submitGuess(): void {
   guesses.push({...currGuess});
   resetCurrGuess();
-  makeSubimage();
+
+  const nextBounds = metadata.value.guess_boundaries[currGuessIndex.value]!;
+  makeSubimage(nextBounds);
 }
 
 const resultsAsEmojiArrays = computed<[string,string,string][]>(() => {
@@ -163,104 +157,23 @@ function copyResults(): void {
     .catch(() => alert(`Failed to copy results to clipboard.`));
 }
 
+const { mainImageUrl, subImageUrl, subImageBounds, fetchImageData, makeSubimage } = useSubimageMaker();
+
 async function initGame() {
   isGameLoading.value = true;
 
   const metadataUrl = `src/assets/${whichDayToPlay}/metadata.json`;
   metadata.value = await getJson<GameMetadata>(metadataUrl);
 
-  await fetchImageData();
-  await makeSubimage();
+  const url = `/src/assets/${whichDayToPlay}/${metadata.value.filename}`;
+  await fetchImageData(url);
+  const firstBoundary = metadata.value.guess_boundaries[0]!;
+  await makeSubimage(firstBoundary);
 
   if (metadata.value) {
     isGameReady.value = true;
   }
   isGameLoading.value = false;
-}
-
-const mainImageUrl = ref<string>(null!);
-const mainImageBlob = ref<Blob>(null!);
-const mainImageDimensions = ref<{width: number, height: number}>(null!);
-
-const subImageUrl = ref<string>(null!);
-
-async function fetchImageData() {
-  const src = `/src/assets/${whichDayToPlay}/${metadata.value.filename}`;
-  const resp = await fetch(src);
-  const blob = await resp.blob();
-  const url = URL.createObjectURL(blob);
-  mainImageBlob.value = blob;
-  mainImageUrl.value = url;
-  subImageUrl.value = url;
-
-  const bitmap = await createImageBitmap(blob);
-  mainImageDimensions.value = {
-    width: bitmap.width,
-    height: bitmap.height,
-  };
-  bitmap.close();
-}
-
-const subImageBounds = ref<SubimageBounds>(null!);
-async function makeSubimage() {
-  const bounds = metadata.value.guess_boundaries[currGuessIndex.value];
-
-  if (!bounds) return null;
-
-  const leftPercent = bounds.x_start_percent;
-  const rightPercent = bounds.x_end_percent;
-  const topPercent = bounds.y_start_percent;
-  const bottomPercent = bounds.y_end_percent;
-
-  const widthPercent = rightPercent - leftPercent;
-  const heightPercent = bottomPercent - topPercent;
-
-  // const horizCenter = (leftPercent + rightPercent) / 2;
-  // const vertCenter = (topPercent + bottomPercent) / 2;
-
-  // const horizShift = 50 - horizCenter;
-  // const vertShift = 50 - vertCenter;
-
-  // const vertScale = 100 / (bottomPercent - topPercent);
-  // const horizScale = 100 / (rightPercent - leftPercent);
-  // const scale = Math.max(vertScale, horizScale, 1);
- 
-  // console.log(topPercent, rightPercent, bottomPercent, leftPercent, scale, horizShift, vertShift);
-
-  const bitmap = await createImageBitmap(mainImageBlob.value);
-
-  const leftPx = leftPercent / 100 * bitmap.width;
-  const rightPx = rightPercent / 100 * bitmap.width;
-  const topPx = topPercent / 100 * bitmap.height;
-  const bottomPx = bottomPercent / 100 * bitmap.height;
-
-  const widthPx = rightPx - leftPx;
-  const heightPx = bottomPx - topPx;
-
-  subImageBounds.value = {
-    left: leftPercent,
-    right: rightPercent,
-    top: topPercent,
-    bottom: bottomPercent,
-    width: widthPercent,
-    height: heightPercent,
-  };
-  
-  console.log('%', leftPercent, rightPercent, topPercent, bottomPercent, widthPercent, heightPercent);
-  console.log('px', leftPx, rightPx, topPx, bottomPx, widthPx, heightPx);
-
-  const canvas = document.createElement('canvas');
-  canvas.width = widthPx;
-  canvas.height = heightPx;
-
-  const context = canvas.getContext('2d')!;
-  context.drawImage(bitmap, leftPx, topPx, widthPx, heightPx, 0, 0, widthPx, heightPx);
-
-  const extract = context.getImageData(0, 0, widthPx, heightPx);
-
-  console.log(extract);
-
-  subImageUrl.value = canvas.toDataURL();
 }
 
 onMounted(() => {
