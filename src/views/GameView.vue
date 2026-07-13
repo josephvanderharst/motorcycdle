@@ -1,13 +1,34 @@
 <script setup lang="ts">
+import { useGamestate } from '@/shared/gamestate';
 import { useSubimageMaker } from '@/shared/subimage-maker';
 import type { GameMetadata } from '@/types/game-metadata.type';
 import type { Guess } from '@/types/guess.type';
-import { computed, onMounted, reactive, ref, type Reactive, type Ref } from 'vue';
+import { onMounted, ref, type Ref } from 'vue';
 
 const devMode = ref(false);
 
-const minYear = 1900;
-const maxYear = new Date().getFullYear();
+const initGuesses: Guess[] = [];
+
+// const initGuesses: Guess[] = [
+//   { make: 'Hayley Darwin', model: 'Da Hawg', year: 1945 },
+//   { make: 'Hayday Dayvid', model: 'Payday', year: 2001 },
+//   { make: 'Harley Davidson', model: 'Road Kingn\'t', year: 2010 },
+// ];
+
+// const initGuesses: Guess[] = [
+//   { make: 'Hayley Darwin', model: 'Da Hawg', year: 1945 },
+//   { make: 'Hayday Dayvid', model: 'Payday', year: 2001 },
+//   { make: 'Harley Davidson', model: 'Road King', year: 2010 },
+//   { make: 'Harley Davidson', model: 'Road King', year: 2011 },
+// ];
+
+// const initGuesses: Guess[] = [
+//   { make: 'Hayley Darwin', model: 'Da Hawg', year: 1945 },
+//   { make: 'Hayday Dayvid', model: 'Payday', year: 2001 },
+//   { make: 'Hurley Duelly', model: 'Road Queen', year: 2019 },
+//   { make: 'Horribly Derpy', model: 'Hamster Huey', year: 2013 },
+//   { make: 'Harley Davidson', model: 'Road King', year: 2011 },
+// ];
 
 const whichDayToPlay = '2026-07-09';
 
@@ -28,71 +49,28 @@ async function getJson<T>(url: string | URL): Promise<T> {
 const isGameLoading: Ref<boolean> = ref(false);
 const isGameReady: Ref<boolean> = ref(false);
 
-const metadata: Ref<GameMetadata> = ref({} as GameMetadata);
+const metadata: Ref<GameMetadata> = ref(null!);
 
-const numGuesses = computed(() => metadata.value?.guess_boundaries?.length ?? 0);
-
-const answer = computed(() => metadata.value?.answer);
-
-const currGuess: Reactive<Guess> = reactive({ make: null!, model: null!, year: null! });
-
-const guesses: Reactive<Guess[]> = reactive([]);
-
-// const guesses: Reactive<Guess[]> = reactive([
-//   { make: 'Hayley Darwin', model: 'Da Hawg', year: 1945 },
-//   { make: 'Hayday Dayvid', model: 'Payday', year: 2001 },
-//   { make: 'Harley Davidson', model: 'Road King', year: 2010 },
-//   { make: 'Harley Davidson', model: 'Road King', year: 2011 },
-// ]);
-
-// const guesses: Reactive<Guess[]> = reactive([
-//   { make: 'Hayley Darwin', model: 'Da Hawg', year: 1945 },
-//   { make: 'Hayday Dayvid', model: 'Payday', year: 2001 },
-//   { make: 'Hurley Duelly', model: 'Road Queen', year: 2019 },
-//   { make: 'Horribly Derpy', model: 'Hamster Huey', year: 2013 },
-//   { make: 'Harley Davidson', model: 'Road King', year: 2011 },
-// ]);
-
-const guessedCorrectly = computed(() => {
-  const theGuesses = guesses;
-  const finalGuess = theGuesses[theGuesses.length - 1];
-
-  if (finalGuess == null) return false;
-
-  return makeOrModelCorrect(finalGuess.make, answer.value.make)
-    && makeOrModelCorrect(finalGuess.model, answer.value.model)
-    && yearDist(finalGuess.year, answer.value.year) <= 5;
-});
-
-const currGuessIndex = computed(() => guesses.length);
-
-const guessesAfterCurrent = computed(() => {
-  const numRemaining = numGuesses.value - guesses.length;
-  const remainingAfterCurrent = numRemaining - (guessedCorrectly.value ? 0 : 1);
-
-  if (remainingAfterCurrent > 0) return new Array(remainingAfterCurrent);
-  else return [];
-});
-
-const isGameOver = computed(() => {
-  return guessedCorrectly.value || currGuessIndex.value === numGuesses.value;
-});
-
-function makeOrModelCorrect(value: string, answer: string): boolean {
-  value = (value || '').trim().toLowerCase();
-  answer = (answer || '').trim().toLowerCase();
-
-  if (value === answer) return true;
-  else return false;
-}
+const {
+  minYear,
+  maxYear,
+  numGuesses,
+  answer,
+  currGuess,
+  guesses,
+  guessedCorrectly,
+  currGuessIndex,
+  guessesAfterCurrent,
+  isGameOver,
+  makeOrModelCorrect,
+  yearDist,
+  isGuessValid,
+  resultsAsEmojiArrays,
+  ...gamestate
+} = useGamestate(initGuesses);
 
 function makeOrModelClass(value: string, answer: string): string { 
   return makeOrModelCorrect(value, answer) ? 'green' : 'red';
-}
-
-function yearDist(value: number, answer: number): number {
-  if (value == null) return 1000;
-  else return Math.abs(answer - value);
 }
 
 function yearClass(value: number, answer: number): string {
@@ -103,47 +81,11 @@ function yearClass(value: number, answer: number): string {
   else return 'red';
 }
 
-function resetCurrGuess(): void {
-  currGuess.make = null!;
-  currGuess.model = null!;
-  currGuess.year = null!;
-}
-
-const isGuessValid = computed(() => {
-  const make = (currGuess.make ?? '').trim();
-  const model = (currGuess.model ?? '').trim();
-  const year = currGuess.year ?? 0;
-
-  return make !== ''
-    && model !== ''
-    && year >= minYear
-    && year <= maxYear;
-});
-
 function submitGuess(): void {
-  guesses.push({...currGuess});
-  resetCurrGuess();
+  gamestate.submitGuess();
 
-  const nextBounds = metadata.value.guess_boundaries[currGuessIndex.value]!;
-  makeSubimage(nextBounds);
+  subimageMaker.makeSubimage(gamestate.currGuessBoundary.value);
 }
-
-const resultsAsEmojiArrays = computed<[string,string,string][]>(() => {
-  return guesses.map(guess => {
-    const squares: [string,string,string] = ['🟥','🟥','🟥'];
-
-    if (makeOrModelCorrect(guess.make, answer.value.make)) squares[0] = '🟩';
-
-    if (makeOrModelCorrect(guess.model, answer.value.model)) squares[1] = '🟩';
-
-    const dist = yearDist(guess.year, answer.value.year);
-    if (dist === 0) squares[2] = '✅';
-    else if (dist <= 5) squares[2] = '❎';
-    else if (dist <= 10) squares[2] = '🟨';
-
-    return squares;
-  });
-});
 
 function copyResults(): void {
   const results = resultsAsEmojiArrays.value;
@@ -157,18 +99,20 @@ function copyResults(): void {
     .catch(() => alert(`Failed to copy results to clipboard.`));
 }
 
-const { mainImageUrl, subImageUrl, subImageBounds, fetchImageData, makeSubimage } = useSubimageMaker();
+const { mainImageUrl, subImageUrl, subImageBounds, ...subimageMaker } = useSubimageMaker();
 
 async function initGame() {
   isGameLoading.value = true;
 
   const metadataUrl = `src/assets/${whichDayToPlay}/metadata.json`;
   metadata.value = await getJson<GameMetadata>(metadataUrl);
+  // TODO: Handle errors and such
+
+  gamestate.initGame(metadata);
 
   const url = `/src/assets/${whichDayToPlay}/${metadata.value.filename}`;
-  await fetchImageData(url);
-  const firstBoundary = metadata.value.guess_boundaries[0]!;
-  await makeSubimage(firstBoundary);
+  await subimageMaker.fetchImageData(url);
+  await subimageMaker.makeSubimage(gamestate.currGuessBoundary.value);
 
   if (metadata.value) {
     isGameReady.value = true;
@@ -230,7 +174,7 @@ onMounted(() => {
           <template v-if="currGuessIndex < numGuesses && !guessedCorrectly">
             <input type="text" v-model="currGuess.make" />
             <input type="text" v-model="currGuess.model" />
-            <input type="number" v-model="currGuess.year" min="1900" :max="maxYear" />
+            <input type="number" v-model="currGuess.year" :min="minYear" :max="maxYear" />
           </template>
 
           <template v-for="(_, index) of guessesAfterCurrent" :key="index + currGuessIndex">
