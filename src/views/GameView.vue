@@ -6,10 +6,29 @@ import { useSubimageMaker } from '@/shared/subimage-maker';
 import type { GameMetadata } from '@/types/game-metadata.type';
 import type { MakeModelMetadata } from '@/types/guess-metadata.type';
 import { computed, onMounted, ref, type Ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const devMode = ref(false);
 
-const gameDayNumber: number = 1;
+const route = useRoute();
+
+const rawDayFromRoute = +(<string> route.query.day);
+let dayFromRoute: number | null = +rawDayFromRoute;
+
+const dayProvided = dayFromRoute != null && !isNaN(dayFromRoute);
+
+if (!dayProvided) {
+  // Get today's "day" number or set default
+  dayFromRoute = 1;
+
+  const router = useRouter();
+  router.replace({
+    path: route.path,
+    query: { day: dayFromRoute },
+  });
+}
+
+const gameDayNumber = dayFromRoute;
 
 const isGameLoading: Ref<boolean> = ref(false);
 const isGameReady: Ref<boolean> = ref(false);
@@ -110,7 +129,8 @@ onMounted(() => {
     <span><b>Num guesses after current:</b> {{ guessesAfterCurrent.length }}</span><br/>
     <span><b>Did player win:</b> {{ guessedCorrectly }}</span><br/>
     <span><b>Is game over:</b> {{ isGameOver }}</span><br/>
-    <span><b>Metadata:</b> {{ metadata }}</span>
+    <span><b>Metadata:</b> {{ metadata }}</span><br/>
+    <span><b>Route:</b> {{ route }}</span>
   </details>
   <div class="d-flex w-100 justify-content-center" v-if="isGameReady">
     <div class="col-12 col-md-10 col-xl-8">
