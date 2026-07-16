@@ -84,8 +84,10 @@ function copyResultsToClipboard(): void {
     .map(([make,model,year]) => `${make} ${model} ${year}\n`)
     .join('');
 
-  navigator.clipboard.writeText(formatted)
-    .then(() => alert(`Copied results to clipboard!\n\n${formatted}`))
+  const withPrefix = `Motorcycdle ${gameDayNumber} ${guessedCorrectly.value ? currGuessIndex.value : 'X'}/${numGuesses.value}:\n${formatted}`;
+
+  navigator.clipboard.writeText(withPrefix)
+    .then(() => alert(`Copied results to clipboard!\n\n${withPrefix}`))
     .catch(() => alert(`Failed to copy results to clipboard.`));
 }
 
