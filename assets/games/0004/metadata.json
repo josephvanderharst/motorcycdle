@@ -1,0 +1,34 @@
+{
+  "filename": "0004.webp",
+  "answer": {
+    "make": "Ducati",
+    "model": "Multistrada V4",
+    "year": 2023
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 40,
+      "x_end_percent": 60,
+      "y_start_percent": 48,
+      "y_end_percent": 68
+    },
+    {
+      "x_start_percent": 35,
+      "x_end_percent": 65,
+      "y_start_percent": 43,
+      "y_end_percent": 73
+    },
+    {
+      "x_start_percent": 34,
+      "x_end_percent": 90,
+      "y_start_percent": 5,
+      "y_end_percent": 61
+    },
+    {
+      "x_start_percent": 26,
+      "x_end_percent": 91,
+      "y_start_percent": 5,
+      "y_end_percent": 70
+    }
+  ]
+}

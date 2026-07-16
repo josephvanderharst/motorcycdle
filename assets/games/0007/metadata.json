@@ -1,0 +1,40 @@
+{
+  "filename": "0007.webp",
+  "answer": {
+    "make": "BMW",
+    "model": "R62",
+    "year": 1928
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 15,
+      "x_end_percent": 35,
+      "y_start_percent": 58,
+      "y_end_percent": 78
+    },
+    {
+      "x_start_percent": 13,
+      "x_end_percent": 43,
+      "y_start_percent": 50,
+      "y_end_percent": 80
+    },
+    {
+      "x_start_percent": 11,
+      "x_end_percent": 51,
+      "y_start_percent": 42,
+      "y_end_percent": 82
+    },
+    {
+      "x_start_percent": 5,
+      "x_end_percent": 65,
+      "y_start_percent": 27,
+      "y_end_percent": 87
+    },
+    {
+      "x_start_percent": 10,
+      "x_end_percent": 75,
+      "y_start_percent": 22,
+      "y_end_percent": 87
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "filename": "0005.webp",
+  "answer": {
+    "make": "Yamaha",
+    "model": "MT-07",
+    "year": 2018
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 5,
+      "x_end_percent": 25,
+      "y_start_percent": 38,
+      "y_end_percent": 58
+    },
+    {
+      "x_start_percent": 6,
+      "x_end_percent": 36,
+      "y_start_percent": 33,
+      "y_end_percent": 63
+    },
+    {
+      "x_start_percent": 7,
+      "x_end_percent": 57,
+      "y_start_percent": 32,
+      "y_end_percent": 82
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "BMW": ["R 1300", "M 1000", "F 900", "K 1600", "R62"],
+  "Ducati": ["Multistrada V4", "DesertX", "Panigale V4", "Monster", "Streetfighter V4"],
+  "Harley Davidson": ["Street Glide", "Road Glide", "Nightster", "Tri Glide Ultra Classic", "Street Bob", "Road King"],
+  "Honda": ["CRF300L", "Rebel 1100", "NT 1100", "Gold Wing", "CB650R"],
+  "Indian": ["Scout", "Sport Chief", "FTR", "Chief Dark Horse", "Roadmaster"],
+  "Kawasaki": ["Ninja 500", "Z650", "Z900", "Ninja H2 R", "Vulcan 1700 Voyager ABS", "KLX300"],
+  "Moto Guzzi": ["V7", "V100 Mandello", "MGX-21", "V9 Roamer", "V85 TT", "Falcone"],
+  "Suzuki": ["V-Strom 1050", "GSX-R750", "GSX-R1000R", "GSX-S1000", "Hayabusa"],
+  "Triumph": ["Rocket 3 R", "Rocket 3 GT", "Speed Triple 1200 RS", "Tiger 1200 GT Pro", "Trident 660", "Speed 400", "TF 250-E"],
+  "Yamaha": ["MT-07", "Tenere 700", "Tracer 9 GT", "XSR125", "V-Star 250"]
+}

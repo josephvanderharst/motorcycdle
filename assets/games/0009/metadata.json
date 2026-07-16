@@ -1,0 +1,52 @@
+{
+  "filename": "0009.webp",
+  "answer": {
+    "make": "Triumph",
+    "model": "TF 250-E",
+    "year": 2026
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 40,
+      "x_end_percent": 60,
+      "y_start_percent": 74,
+      "y_end_percent": 94
+    },
+    {
+      "x_start_percent": 39,
+      "x_end_percent": 59,
+      "y_start_percent": 55,
+      "y_end_percent": 75
+    },
+    {
+      "x_start_percent": 3,
+      "x_end_percent": 30,
+      "y_start_percent": 62,
+      "y_end_percent": 89
+    },
+    {
+      "x_start_percent": 64,
+      "x_end_percent": 94,
+      "y_start_percent": 64,
+      "y_end_percent": 94
+    },
+    {
+      "x_start_percent": 5,
+      "x_end_percent": 50,
+      "y_start_percent": 17,
+      "y_end_percent": 62
+    },
+    {
+      "x_start_percent": 20,
+      "x_end_percent": 70,
+      "y_start_percent": 27,
+      "y_end_percent": 77
+    },
+    {
+      "x_start_percent": 76,
+      "x_end_percent": 99,
+      "y_start_percent": 42,
+      "y_end_percent": 58
+    }
+  ]
+}

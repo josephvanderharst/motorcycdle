@@ -1,0 +1,34 @@
+{
+  "filename": "0006.webp",
+  "answer": {
+    "make": "Suzuki",
+    "model": "V-Strom 1050",
+    "year": 2023
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 35,
+      "x_end_percent": 65,
+      "y_start_percent": 62,
+      "y_end_percent": 92
+    },
+    {
+      "x_start_percent": 35,
+      "x_end_percent": 59,
+      "y_start_percent": 24.5,
+      "y_end_percent": 54.5
+    },
+    {
+      "x_start_percent": 30,
+      "x_end_percent": 58,
+      "y_start_percent": 0,
+      "y_end_percent": 23
+    },
+    {
+      "x_start_percent": 10,
+      "x_end_percent": 72,
+      "y_start_percent": 3,
+      "y_end_percent": 65
+    }
+  ]
+}
