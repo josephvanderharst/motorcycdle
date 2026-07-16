@@ -46,3 +46,7 @@ npm run build
 ```sh
 npm run lint
 ```
+
+### Notes
+Motorcycle makes and models came from [this article](https://www.speedmasti.com/us/top-selling-motorcycle-brands/).
+Would like to scrape [this website](https://bikez.com/brands/index.php) if/when it is time to populate the metadata with thousands of models!
