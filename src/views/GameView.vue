@@ -4,7 +4,8 @@ import { useGamestate } from '@/shared/gamestate';
 import { initGuesses } from '@/shared/init-guesses';
 import { useSubimageMaker } from '@/shared/subimage-maker';
 import type { GameMetadata } from '@/types/game-metadata.type';
-import { onMounted, ref, type Ref } from 'vue';
+import type { MakeModelMetadata } from '@/types/guess-metadata.type';
+import { computed, onMounted, ref, type Ref } from 'vue';
 
 const devMode = ref(false);
 
@@ -13,6 +14,7 @@ const gameDayNumber: number = 1;
 const isGameLoading: Ref<boolean> = ref(false);
 const isGameReady: Ref<boolean> = ref(false);
 
+const makesAndModels: Ref<MakeModelMetadata> = ref(null!);
 const metadata: Ref<GameMetadata> = ref(null!);
 
 const {
@@ -32,6 +34,9 @@ const {
   resultsAsEmojiArrays,
   ...gamestate
 } = useGamestate(initGuesses);
+
+const makes = computed(() => Object.keys(makesAndModels.value ?? {}).sort());
+const models = computed(() => makesAndModels.value[currGuess.make]?.sort() ?? []);
 
 const { mainImageUrl, subImageUrl, subImageBounds, ...subimageMaker } = useSubimageMaker();
 
@@ -68,15 +73,19 @@ function copyResultsToClipboard(): void {
 async function initGame() {
   isGameLoading.value = true;
 
+  const basePath = `src/assets/games`;
+  const makesAndModelsPath = `${basePath}/makes-and-models.json`;
+  makesAndModels.value = await getJson<MakeModelMetadata>(makesAndModelsPath);
+
   const dayIndex = String(gameDayNumber).padStart(4, '0');
-  const basePath = `src/assets/games/${dayIndex}`;
-  const metadataUrl = `${basePath}/metadata.json`;
+  const dayPath = `${basePath}/${dayIndex}`;
+  const metadataUrl = `${dayPath}/metadata.json`;
   metadata.value = await getJson<GameMetadata>(metadataUrl);
   // TODO: Handle errors and such
 
   gamestate.initGame(metadata);
 
-  const url = `${basePath}/${metadata.value.filename}`;
+  const url = `${dayPath}/${metadata.value.filename}`;
   await subimageMaker.fetchImageData(url);
   await subimageMaker.makeSubimage(gamestate.currGuessBoundary.value);
 
@@ -138,8 +147,12 @@ onMounted(() => {
           </template>
 
           <template v-if="currGuessIndex < numGuesses && !guessedCorrectly">
-            <input type="text" v-model="currGuess.make" />
-            <input type="text" v-model="currGuess.model" />
+            <select v-model="currGuess.make" @change="currGuess.model = ''">
+              <option v-for="make of makes" :key="make">{{ make }}</option>
+            </select>
+            <select v-model="currGuess.model">
+              <option v-for="model of models" :key="model">{{ model }}</option>
+            </select>
             <input type="number" v-model="currGuess.year" :min="minYear" :max="maxYear" />
           </template>
 
