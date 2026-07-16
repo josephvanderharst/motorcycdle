@@ -8,7 +8,7 @@ import { onMounted, ref, type Ref } from 'vue';
 
 const devMode = ref(false);
 
-const whichDayToPlay = '2026-07-09';
+const gameDayNumber: number = 1;
 
 const isGameLoading: Ref<boolean> = ref(false);
 const isGameReady: Ref<boolean> = ref(false);
@@ -68,13 +68,15 @@ function copyResultsToClipboard(): void {
 async function initGame() {
   isGameLoading.value = true;
 
-  const metadataUrl = `src/assets/${whichDayToPlay}/metadata.json`;
+  const dayIndex = String(gameDayNumber).padStart(4, '0');
+  const basePath = `src/assets/games/${dayIndex}`;
+  const metadataUrl = `${basePath}/metadata.json`;
   metadata.value = await getJson<GameMetadata>(metadataUrl);
   // TODO: Handle errors and such
 
   gamestate.initGame(metadata);
 
-  const url = `/src/assets/${whichDayToPlay}/${metadata.value.filename}`;
+  const url = `${basePath}/${metadata.value.filename}`;
   await subimageMaker.fetchImageData(url);
   await subimageMaker.makeSubimage(gamestate.currGuessBoundary.value);
 
