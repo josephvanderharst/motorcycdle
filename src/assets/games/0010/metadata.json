@@ -1,5 +1,5 @@
 {
-  "filename": "0010.jpg",
+  "filename": "0010.webp",
   "answer": {
     "make": "Moto Guzzi",
     "model": "Falcone",
@@ -9,32 +9,26 @@
     {
       "x_start_percent": 40,
       "x_end_percent": 60,
-      "y_start_percent": 78,
-      "y_end_percent": 98
+      "y_start_percent": 48,
+      "y_end_percent": 68
     },
     {
       "x_start_percent": 35,
-      "x_end_percent": 59,
-      "y_start_percent": 75,
-      "y_end_percent": 99
+      "x_end_percent": 70,
+      "y_start_percent": 45,
+      "y_end_percent": 80
     },
     {
       "x_start_percent": 30,
-      "x_end_percent": 58,
-      "y_start_percent": 70,
-      "y_end_percent": 98
+      "x_end_percent": 80,
+      "y_start_percent": 43,
+      "y_end_percent": 93
     },
     {
-      "x_start_percent": 19,
-      "x_end_percent": 57,
-      "y_start_percent": 60,
-      "y_end_percent": 97
-    },
-    {
-      "x_start_percent": 0,
-      "x_end_percent": 100,
-      "y_start_percent": 0,
-      "y_end_percent": 100
+      "x_start_percent": 20,
+      "x_end_percent": 85,
+      "y_start_percent": 20,
+      "y_end_percent": 85
     }
   ]
 }
