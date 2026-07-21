@@ -102,6 +102,20 @@ async function initGame() {
   const dayPath = `${basePath}/${dayIndex}`;
   const metadataUrl = `${dayPath}/metadata.json`;
   metadata.value = await getJson<GameMetadata>(metadataUrl);
+
+  // If make and model isn't present, add them
+  const answer = metadata.value.answer;
+  if (makesAndModels.value[answer.make] == null) {
+    console.log('Make missing. Adding...');
+    makesAndModels.value[answer.make] = [answer.model];
+  }
+
+  const make = makesAndModels.value[answer.make]!;
+  if (!make.includes(answer.model)) {
+    console.log('Model missing. Adding...');
+    make.push(answer.model);
+  }
+
   // TODO: Handle errors and such
 
   gamestate.initGame(metadata);
