@@ -78,7 +78,7 @@ export function useGamestate(initGuesses: Guess[] = []) {
 
       const dist = yearDist(guess.year, answer.value.year);
       if (dist === 0) squares[2] = '✅';
-      else if (dist <= 5) squares[2] = '❎';
+      else if (dist <= 5) squares[2] = '🟩';
       else if (dist <= 10) squares[2] = '🟨';
 
       return squares;
