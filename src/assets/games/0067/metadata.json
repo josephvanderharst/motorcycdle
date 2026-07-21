@@ -1,0 +1,52 @@
+{
+  "filename": "dies-of-cringe.jpg",
+  "answer": {
+    "make": "Killer",
+    "model": "Bean",
+    "year": 2008
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 40,
+      "x_end_percent": 60,
+      "y_start_percent": 30,
+      "y_end_percent": 50
+    },
+    {
+      "x_start_percent": 50,
+      "x_end_percent": 70,
+      "y_start_percent": 50,
+      "y_end_percent": 70
+    },
+    {
+      "x_start_percent": 65,
+      "x_end_percent": 85,
+      "y_start_percent": 55,
+      "y_end_percent": 75
+    },
+    {
+      "x_start_percent": 10,
+      "x_end_percent": 30,
+      "y_start_percent": 50,
+      "y_end_percent": 70
+    },
+    {
+      "x_start_percent": 25,
+      "x_end_percent": 55,
+      "y_start_percent": 23.5,
+      "y_end_percent": 53.5
+    },
+    {
+      "x_start_percent": 20,
+      "x_end_percent": 50,
+      "y_start_percent": 50,
+      "y_end_percent": 80
+    },
+    {
+      "x_start_percent": 0,
+      "x_end_percent": 100,
+      "y_start_percent": 0,
+      "y_end_percent": 100
+    }
+  ]
+}
