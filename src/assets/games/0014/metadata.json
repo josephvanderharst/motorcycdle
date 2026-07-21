@@ -1,0 +1,40 @@
+{
+  "filename": "0014.jpg",
+  "answer": {
+    "make": "Ducati",
+    "model": "900SS",
+    "year": 1981
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 5,
+      "x_end_percent": 30,
+      "y_start_percent": 53,
+      "y_end_percent": 78
+    },
+    {
+      "x_start_percent": 4,
+      "x_end_percent": 49,
+      "y_start_percent": 45,
+      "y_end_percent": 90
+    },
+    {
+      "x_start_percent": 45,
+      "x_end_percent": 90,
+      "y_start_percent": 45,
+      "y_end_percent": 90
+    },
+    {
+      "x_start_percent": 50,
+      "x_end_percent": 90,
+      "y_start_percent": 0,
+      "y_end_percent": 40
+    },
+    {
+      "x_start_percent": 0,
+      "x_end_percent": 100,
+      "y_start_percent": 0,
+      "y_end_percent": 100
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "filename": "0013.jpg",
+  "answer": {
+    "make": "Honda",
+    "model": "MB5",
+    "year": 1982
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 27,
+      "x_end_percent": 47,
+      "y_start_percent": 15,
+      "y_end_percent": 35
+    },
+    {
+      "x_start_percent": 26,
+      "x_end_percent": 56,
+      "y_start_percent": 6,
+      "y_end_percent": 36
+    },
+    {
+      "x_start_percent": 10,
+      "x_end_percent": 70,
+      "y_start_percent": 35,
+      "y_end_percent": 95
+    },
+    {
+      "x_start_percent": 20,
+      "x_end_percent": 85,
+      "y_start_percent": 15,
+      "y_end_percent": 80
+    },
+    {
+      "x_start_percent": 0,
+      "x_end_percent": 100,
+      "y_start_percent": 0,
+      "y_end_percent": 100
+    }
+  ]
+}

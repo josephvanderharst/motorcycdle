@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const days = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+const days = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]);
 </script>
 
 <template>
   <div class="d-flex w-100 justify-content-center">
-    <div class="col-12 col-md-10 col-xl-8">
+    <div class="col-12 col-md-10 col-xl-9">
       <div class="d-flex flex-column align-items-center py-2 gap-2">
         <h1>Welcome to Motorcycdle!</h1>
-        <h2 class="mb-0" style="line-height: 1rem">
+        <h2 class="mb-0 text-center">
           The
           <a target="_blank" href="https://www.nytimes.com/games/wordle/index.html">Wordle</a>-
           and
           <a target="_blank" href="https://www.playcardle.com/">Cardle</a>-inspired Motorcycle-guessing game!
         </h2>
-        <h4><i>^^^ Wordle and Cardle are pretty cool. You should play them! ^^^</i></h4>
+        <h4 class="text-center"><i>^^^ Wordle and Cardle are pretty cool. You should play them! ^^^</i></h4>
 
         <div class="game-tile-container">
           <router-link class="game-tile" v-for="day of days" :key="day" :to="{ path: 'game', query: { day: day } }">
@@ -39,7 +39,7 @@ const days = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 }
 
 .game-tile {
-  min-width: 10vw;
+  min-width: 10%;
   width: 150px;
   max-width: 33vw;
 
