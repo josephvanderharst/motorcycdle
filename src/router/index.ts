@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
+import type { GameEngineData } from '../views/GameView.vue';
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -13,6 +14,17 @@ const router = createRouter({
       path: '/game',
       name: 'game',
       component: () => import('../views/GameView.vue'),
+      meta: <GameEngineData> {
+        gameType: 'motorcycle',
+      },
+    },
+    {
+      path: '/game/car',
+      name: 'car',
+      component: () => import('../views/GameView.vue'),
+      meta: <GameEngineData> {
+        gameType: 'car',
+      },
     },
     {
       path: '/about',

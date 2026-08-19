@@ -8,9 +8,17 @@ import type { MakeModelMetadata } from '@/types/guess-metadata.type';
 import { computed, onMounted, ref, type Ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+export type GameEngineData = {
+  gameType: 'motorcycle' | 'car';
+};
+
 const devMode = ref(false);
 
 const route = useRoute();
+
+const routeMetadata: GameEngineData = <any> route.meta;
+
+const gameType = routeMetadata?.gameType ?? 'motorcycle';
 
 const rawDayFromRoute = +(<string> route.query.day);
 let dayFromRoute: number | null = +rawDayFromRoute;
@@ -94,7 +102,7 @@ function copyResultsToClipboard(): void {
 async function initGame() {
   isGameLoading.value = true;
 
-  const basePath = `src/assets/games`;
+  const basePath = gameType === 'motorcycle' ? `src/assets/games` : `src/assets/cars`;
   const makesAndModelsPath = `${basePath}/makes-and-models.json`;
   makesAndModels.value = await getJson<MakeModelMetadata>(makesAndModelsPath);
 
@@ -140,6 +148,7 @@ onMounted(() => {
     <summary>Dev Mode Details:</summary>
 
     <span><b>Current guess:</b> {{ currGuess }}</span><br/>
+    <span><b>Current subimage:</b> {{ subImageBounds }}</span><br/>
     <span><b>Num guesses allowed:</b> {{ numGuesses }}</span><br/>
     <span><b>Guess index:</b> {{ currGuessIndex }}</span><br/>
     <span><b>Num guesses after current:</b> {{ guessesAfterCurrent.length }}</span><br/>
@@ -151,7 +160,7 @@ onMounted(() => {
   <div class="d-flex w-100 justify-content-center" v-if="isGameReady">
     <div class="col-12 col-md-10 col-xl-8">
       <div class="d-flex flex-column align-items-center py-2 gap-2">
-        <details v-if="devMode">
+        <details v-if="devMode" open>
           <summary>Subimage outline:</summary>
 
           <div class="position-relative">
@@ -199,7 +208,7 @@ onMounted(() => {
           </template>
         </div>
 
-        <button type="button" :disabled="!isGuessValid" @click="submitGuess">Guess</button>
+        <button type="button" :disabled="false" focus @click="submitGuess">Guess</button>
 
         <div class="text-center d-flex flex-column align-items-center" v-if="isGameOver">
           <h2 v-if="guessedCorrectly">A winner is you!</h2>
