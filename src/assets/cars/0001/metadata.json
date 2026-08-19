@@ -1,0 +1,46 @@
+{
+  "filename": "0001.webp",
+  "answer": {
+    "make": "Chevrolet",
+    "model": "Trax",
+    "year": 2017
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 45,
+      "x_end_percent": 55,
+      "y_start_percent": 45,
+      "y_end_percent": 55
+    },
+    {
+      "x_start_percent": 40,
+      "x_end_percent": 60,
+      "y_start_percent": 40,
+      "y_end_percent": 60
+    },
+    {
+      "x_start_percent": 37,
+      "x_end_percent": 62,
+      "y_start_percent": 37,
+      "y_end_percent": 62
+    },
+    {
+      "x_start_percent": 32,
+      "x_end_percent": 67,
+      "y_start_percent": 37,
+      "y_end_percent": 72
+    },
+    {
+      "x_start_percent": 32,
+      "x_end_percent": 82,
+      "y_start_percent": 37,
+      "y_end_percent": 87
+    },
+    {
+      "x_start_percent": 16,
+      "x_end_percent": 26,
+      "y_start_percent": 4,
+      "y_end_percent": 14
+    }
+  ]
+}

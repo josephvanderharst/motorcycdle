@@ -1,0 +1,21 @@
+{
+  "Chevrolet": ["Trax","Trailblazer","Blazer","Malibu","Cruze","Impala","Tahoe","Suburban","Sonic","Aveo","Silverado","Colorado","Camaro","Corvette","Express","Astro","Blazer EV","Equinox","Equinox EV","Bolt","Spark","Traverse","Montana","S10","Silverado EV","BrightDrop","Volt","Cobalt","HHR","SSR","Avalanche","Uplander"],
+  "Buick": ["Verano","Regal","LaCrosse","Envista","Encore","Encore GX","Envision","Enclave","Le Sabre","Riviera","GL8","Century","Roadmaster","Skylark","Cascada","Rendezvous"],
+  "Cadillac": ["CT4","CT5","CT6","XT4","XT5","XT6","Celestiq","Lyriq","Optiq","Escalade","Escalade IQ","ELR","XLR","STS","DTS","SRX","CTS","ATS","Eldorado"],
+  "GMC": ["Terrain","Acadia","Yukon","Sierra","Canyon","Savannah","Safari","Jimmy","Suburban"],
+  "Ford": ["Fiesta","Focus","Fusion","Taurus","Five Hundred","Pinto","Thunderbird","Mustang","GT","Escape","EcoSport","Explorer","Flex","Expedition","Edge","Mustang Mach-E","Bronco","Maverick","Ranger","F-Series","Transit series","E-Series","C-Max","Freestyle","Freestar","Taurus X","Windstar"],
+  "Lincoln": ["Aviator","Corsair","Nautilus","Navigator","MKZ","MKT","MKS","MKC","MKX","Continental","Town Car","Zephyr","Mark LT","Mark VIII"],
+  "Chrysler": ["Pacifica","300","200","Sebring","PT Cruiser","Crossfire","Imperial","LeBaron","Aspen","Town and Country"],
+  "Dodge": ["Caravan","Grand Caravan","Ram","Charger","Challenger EV","Challenger","Durango","Journey","Daytona","Shadow","Dart","Avenger","Caliber","Magnum","Hornet","Nitro","Dakota"],
+  "Jeep": ["Wrangler","Cherokee","Grand Cherokee","(Grand) Wagoneer","Renegade","Gladiator","Compass","Recon","Wagoneer S"],
+  "Tesla": ["Model 3","Model Y","Model X","Model S","Cybertruck"],
+  "Fisker": ["Karma","Ocean"],
+  "Kia": ["Forte/K4","K5","EV3","EV6","EV9","Niro","Sportage","Sorento","Telluride","Carnival","Rio"],
+  "Hyundai": ["Accent","Elantra","Sonata","Azera","Ioniq 3","Ioniq 5","Venue","Kona","Tuscon","Santa Fe","Palisade","Ioniq 9","Santa Cruz","Veloster"],
+  "Subaru": ["BRZ","WRX","Impreza","Outback","Ascent","Crosstrek","Forester","Solterra","Baja","Brat"],
+  "Toyota": ["Corolla","Camry","Avalon","Century","Crown","Prius","Yaris (a car)","bZ4X","C-HR","Corolla Cross","RAV4","Venza","Sequoia","Highlander","Grand Highlander","4Runner","Land Cruiser","Tacoma","Tundra","Celica","Supra"],
+  "Lexus": ["IS","ES","LS","LC","NX","RX","RZ","TX","GX","LX","GS","HS","RC","SC"],
+  "Honda": ["Civic","Accord","CR-V","HR-V","Odyssey","Passport","Pilot","Ridgeline","Prelude","CR-Z","Crosstour","Element","Prologue"],
+  "Acura": ["Integra","MDX","ADX","ZDX","NSX","RL","TL","RSX","RDX","TLX"],
+  "Nissan": ["Versa","Kicks","Maxima","Altima","Frontier","Titan","Cube","Sentra","Juke","Leaf","Murano","Pathfinder","Armada","RZ34","X-Terra","Rogue","Ariya"]
+}
