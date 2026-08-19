@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getJson } from '@/shared/fetch-json';
-import { useGamestate } from '@/shared/gamestate';
+import { useGamestate, type ExtraGamestateDetails } from '@/shared/gamestate';
 import { initGuesses } from '@/shared/init-guesses';
 import { useSubimageMaker } from '@/shared/subimage-maker';
 import type { GameMetadata } from '@/types/game-metadata.type';
@@ -44,7 +44,12 @@ const isGameReady: Ref<boolean> = ref(false);
 const makesAndModels: Ref<MakeModelMetadata> = ref(null!);
 const metadata: Ref<GameMetadata> = ref(null!);
 
+const extraGameMetadata: Partial<ExtraGamestateDetails> | undefined = (gameType === 'motorcycle')
+  ? undefined // default
+  : { greenYearRange: 2, yellowYearRange: 5, minYear: 1960 };
+
 const {
+  gamestateDetails,
   minYear,
   maxYear,
   numGuesses,
@@ -60,7 +65,7 @@ const {
   isGuessValid,
   resultsAsEmojiArrays,
   ...gamestate
-} = useGamestate(initGuesses);
+} = useGamestate(initGuesses, extraGameMetadata);
 
 const makes = computed(() => Object.keys(makesAndModels.value ?? {}).sort());
 const models = computed(() => makesAndModels.value[currGuess.make]?.sort() ?? []);
@@ -74,8 +79,8 @@ function makeOrModelClass(value: string, answer: string): string {
 function yearClass(value: number, answer: number): string {
   const dist = yearDist(value, answer);
 
-  if (dist <= 5) return 'green';
-  else if (dist <= 10) return 'yellow';
+  if (dist <= gamestateDetails.greenYearRange) return 'green';
+  else if (dist <= gamestateDetails.yellowYearRange) return 'yellow';
   else return 'red';
 }
 

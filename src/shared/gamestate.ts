@@ -3,9 +3,24 @@ import type { Boundary, GameMetadata } from "@/types/game-metadata.type";
 import type { Guess } from "@/types/guess.type";
 import { computed, reactive, ref, toValue, type MaybeRefOrGetter } from "vue";
 
-export function useGamestate(initGuesses: Guess[] = []) {
-  const minYear = 1900;
-  const maxYear = new Date().getFullYear();
+export type ExtraGamestateDetails = {
+  greenYearRange: number;
+  yellowYearRange: number;
+  minYear: number;
+  maxYear: number;
+};
+
+export function useGamestate(initGuesses: Guess[] = [], extraOptions?: Partial<ExtraGamestateDetails>) {
+  const gamestateDetails: ExtraGamestateDetails = {
+    greenYearRange: 5,
+    yellowYearRange: 10,
+    minYear: 1900,
+    maxYear: new Date().getFullYear(),
+    ...(extraOptions ?? {})
+  };
+
+  const minYear = gamestateDetails.minYear;
+  const maxYear = gamestateDetails.maxYear;
 
   const metadata = ref<GameMetadata>(null!);
 
@@ -78,8 +93,8 @@ export function useGamestate(initGuesses: Guess[] = []) {
 
       const dist = yearDist(guess.year, answer.value.year);
       if (dist === 0) squares[2] = '✅';
-      else if (dist <= 5) squares[2] = '🟩';
-      else if (dist <= 10) squares[2] = '🟨';
+      else if (dist <= gamestateDetails.greenYearRange) squares[2] = '🟩';
+      else if (dist <= gamestateDetails.yellowYearRange) squares[2] = '🟨';
 
       return squares;
     });
@@ -101,6 +116,7 @@ export function useGamestate(initGuesses: Guess[] = []) {
   }
 
   return {
+    gamestateDetails,
     minYear,
     maxYear,
     numGuesses,
