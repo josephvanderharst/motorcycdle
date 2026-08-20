@@ -1,0 +1,46 @@
+{
+  "filename": "0002.jpg",
+  "answer": {
+    "make": "Cadillac",
+    "model": "ATS",
+    "year": 2017
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 50,
+      "x_end_percent": 57,
+      "y_start_percent": 45,
+      "y_end_percent": 52
+    },
+    {
+      "x_start_percent": 48,
+      "x_end_percent": 59,
+      "y_start_percent": 44,
+      "y_end_percent": 55
+    },
+    {
+      "x_start_percent": 47,
+      "x_end_percent": 67,
+      "y_start_percent": 40,
+      "y_end_percent": 60
+    },
+    {
+      "x_start_percent": 42,
+      "x_end_percent": 72,
+      "y_start_percent": 35,
+      "y_end_percent": 65
+    },
+    {
+      "x_start_percent": 32,
+      "x_end_percent": 82,
+      "y_start_percent": 37,
+      "y_end_percent": 87
+    },
+    {
+      "x_start_percent": 0,
+      "x_end_percent": 100,
+      "y_start_percent": 0,
+      "y_end_percent": 100
+    }
+  ]
+}
