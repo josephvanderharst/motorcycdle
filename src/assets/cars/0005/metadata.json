@@ -1,0 +1,40 @@
+{
+  "filename": "0005.jpg",
+  "answer": {
+    "make": "Chevrolet",
+    "model": "SS",
+    "year": 2017
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 48,
+      "x_end_percent": 55,
+      "y_start_percent": 51,
+      "y_end_percent": 58
+    },
+    {
+      "x_start_percent": 41,
+      "x_end_percent": 58,
+      "y_start_percent": 46,
+      "y_end_percent": 63
+    },
+    {
+      "x_start_percent": 35,
+      "x_end_percent": 59,
+      "y_start_percent": 40,
+      "y_end_percent": 64
+    },
+    {
+      "x_start_percent": 34,
+      "x_end_percent": 67,
+      "y_start_percent": 36,
+      "y_end_percent": 69
+    },
+    {
+      "x_start_percent": 32,
+      "x_end_percent": 70,
+      "y_start_percent": 35.5,
+      "y_end_percent": 73.5
+    }
+  ]
+}
