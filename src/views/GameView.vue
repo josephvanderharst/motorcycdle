@@ -213,7 +213,7 @@ onMounted(() => {
           </template>
         </div>
 
-        <button type="button" :disabled="!isGuessValid" @click="submitGuess">Guess</button>
+        <button :autofocus="devMode" type="button" :disabled="!devMode && !isGuessValid" @click="submitGuess">Guess</button>
 
         <div class="text-center d-flex flex-column align-items-center" v-if="isGameOver">
           <h2 v-if="guessedCorrectly">A winner is you!</h2>
