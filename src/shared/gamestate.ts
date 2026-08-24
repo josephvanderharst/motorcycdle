@@ -37,7 +37,7 @@ export function useGamestate(initGuesses: Guess[] = [], extraOptions?: Partial<E
 
     return makeOrModelCorrect(finalGuess.make, answer.value.make)
       && makeOrModelCorrect(finalGuess.model, answer.value.model)
-      && yearDist(finalGuess.year, answer.value.year) <= 5;
+      && yearDist(finalGuess.year, answer.value.year) <= gamestateDetails.greenYearRange;
   });
 
   const currGuessIndex = computed(() => guesses.length);
