@@ -1,0 +1,46 @@
+{
+  "filename": "0004.png",
+  "answer": {
+    "make": "Nissan",
+    "model": "Sentra",
+    "year": 2002
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 35,
+      "x_end_percent": 68,
+      "y_start_percent": 37,
+      "y_end_percent": 50
+    },
+    {
+      "x_start_percent": 28.5,
+      "x_end_percent": 70,
+      "y_start_percent": 24.5,
+      "y_end_percent": 66
+    },
+    {
+      "x_start_percent": 24.5,
+      "x_end_percent": 71,
+      "y_start_percent": 23.5,
+      "y_end_percent": 71
+    },
+    {
+      "x_start_percent": 20,
+      "x_end_percent": 76,
+      "y_start_percent": 19,
+      "y_end_percent": 72
+    },
+    {
+      "x_start_percent": 16,
+      "x_end_percent": 77,
+      "y_start_percent": 17,
+      "y_end_percent": 75
+    },
+    {
+      "x_start_percent": 0,
+      "x_end_percent": 100,
+      "y_start_percent": 0,
+      "y_end_percent": 100
+    }
+  ]
+}
