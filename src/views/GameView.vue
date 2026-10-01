@@ -165,25 +165,27 @@ onMounted(() => {
   <div class="d-flex w-100 justify-content-center" v-if="isGameReady">
     <div class="col-12 col-md-10 col-xl-8">
       <div class="d-flex flex-column align-items-center py-2 gap-2">
-        <details v-if="devMode" open>
-          <summary>Subimage outline:</summary>
-
-          <div class="position-relative">
-            <img :src="mainImageUrl" />
-
-            <div :style="{
-              position: 'absolute',
-              border: '2px dashed red',
-              backgroundColor: 'transparent',
-              left: subImageBounds.left + '%',
-              top: subImageBounds.top + '%',
-              width: subImageBounds.width + '%',
-              height: subImageBounds.height + '%',
-            }"></div>
-          </div>
-        </details>
-        <img v-if="!isGameOver" :src="subImageUrl" />
-        <img v-else :src="mainImageUrl" />
+        <div class="d-flex gap-3">
+          <details v-if="devMode" open>
+            <summary>Subimage outline:</summary>
+  
+            <div class="position-relative">
+              <img :src="mainImageUrl" />
+  
+              <div :style="{
+                position: 'absolute',
+                border: '2px dashed red',
+                backgroundColor: 'transparent',
+                left: subImageBounds.left + '%',
+                top: subImageBounds.top + '%',
+                width: subImageBounds.width + '%',
+                height: subImageBounds.height + '%',
+              }"></div>
+            </div>
+          </details>
+          <img v-if="!isGameOver" :src="subImageUrl" />
+          <img v-else :src="mainImageUrl" />
+        </div>
 
         <div class="guess-grid">
           <b>Make:</b>
