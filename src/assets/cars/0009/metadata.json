@@ -1,0 +1,40 @@
+{
+  "filename": "0009.jpg",
+  "answer": {
+    "make": "Chrysler",
+    "model": "LeBaron",
+    "year": 1987
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 28,
+      "x_end_percent": 36,
+      "y_start_percent": 53,
+      "y_end_percent": 61
+    },
+    {
+      "x_start_percent": 25,
+      "x_end_percent": 39,
+      "y_start_percent": 52,
+      "y_end_percent": 66
+    },
+    {
+      "x_start_percent": 22,
+      "x_end_percent": 47,
+      "y_start_percent": 44,
+      "y_end_percent": 69
+    },
+    {
+      "x_start_percent": 20,
+      "x_end_percent": 50,
+      "y_start_percent": 44,
+      "y_end_percent": 74
+    },
+    {
+      "x_start_percent": 18,
+      "x_end_percent": 53,
+      "y_start_percent": 43,
+      "y_end_percent": 78
+    }
+  ]
+}

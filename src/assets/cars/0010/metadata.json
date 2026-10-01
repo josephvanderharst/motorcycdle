@@ -1,0 +1,52 @@
+{
+  "filename": "0010.jpg",
+  "answer": {
+    "make": "Fisker",
+    "model": "Karma",
+    "year": 2011
+  },
+  "guess_boundaries": [
+    {
+      "x_start_percent": 28,
+      "x_end_percent": 36,
+      "y_start_percent": 31,
+      "y_end_percent": 39
+    },
+    {
+      "x_start_percent": 25,
+      "x_end_percent": 38,
+      "y_start_percent": 27,
+      "y_end_percent": 40
+    },
+    {
+      "x_start_percent": 24,
+      "x_end_percent": 42,
+      "y_start_percent": 26,
+      "y_end_percent": 44
+    },
+    {
+      "x_start_percent": 24,
+      "x_end_percent": 47,
+      "y_start_percent": 26,
+      "y_end_percent": 49
+    },
+    {
+      "x_start_percent": 24,
+      "x_end_percent": 52,
+      "y_start_percent": 26,
+      "y_end_percent": 54
+    },
+    {
+      "x_start_percent": 24,
+      "x_end_percent": 57,
+      "y_start_percent": 26,
+      "y_end_percent": 59
+    },
+    {
+      "x_start_percent": 24,
+      "x_end_percent": 62,
+      "y_start_percent": 26,
+      "y_end_percent": 64
+    }
+  ]
+}
